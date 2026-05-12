@@ -1,4 +1,4 @@
-name: courd_cloud_api_checkin
+name: cloak_brower_checkin
 on:
   schedule:
     - cron: '0 0 * * *'
