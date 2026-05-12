@@ -31,6 +31,22 @@ jobs:
         run:
           uv sync
       - name: run task
+        env:
+          CORDCLOUD_EMAIL: ${{ secrets.CORDCLOUD_EMAIL }}
+          CORDCLOUD_PASSWORD: ${{ secrets.CORDCLOUD_PASSWORD }}
+          POP3_USERNAME: ${{ secrets.POP3_USERNAME }}
+          POP3_PASSWORD: ${{ secrets.POP3_PASSWORD }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          POP3_HOST: ${{ vars.POP3_HOST }}
+          POP3_PORT: ${{ vars.POP3_PORT }}
+          POP3_USE_SSL: ${{ vars.POP3_USE_SSL }}
+          SMTP_HOST: ${{ vars.SMTP_HOST }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}
+          SMTP_USE_SSL: ${{ vars.SMTP_USE_SSL }}
+          USE_PERSISTENT_CONTEXT: ${{ vars.USE_PERSISTENT_CONTEXT }}
+          HEADLESS: ${{ vars.HEADLESS }}
+          SAVE_HTML: ${{ vars.SAVE_HTML }}
         run:
           uv run python main.py
     
