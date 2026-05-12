@@ -25,34 +25,39 @@ _env_loaded = load_dotenv()
 if not _env_loaded:
     print("[Config] 未找到 .env 文件，使用系统环境变量")
 
-CORDCLOUD_EMAIL = os.getenv("CORDCLOUD_EMAIL", "")
-CORDCLOUD_PASSWORD = os.getenv("CORDCLOUD_PASSWORD", "")
+def _env(key: str, default: str = "") -> str:
+    """读取环境变量，空字符串视为未设置，返回默认值"""
+    val = os.getenv(key)
+    return val if val else default
+
+CORDCLOUD_EMAIL = _env("CORDCLOUD_EMAIL")
+CORDCLOUD_PASSWORD = _env("CORDCLOUD_PASSWORD")
 
 # POP3 配置
-POP3_HOST = os.getenv("POP3_HOST", "pop.example.com")
-POP3_PORT = int(os.getenv("POP3_PORT", "995"))
-POP3_USE_SSL = os.getenv("POP3_USE_SSL", "true").lower() == "true"
-POP3_USERNAME = os.getenv("POP3_USERNAME", CORDCLOUD_EMAIL)
-POP3_PASSWORD = os.getenv("POP3_PASSWORD", "")
+POP3_HOST = _env("POP3_HOST", "pop.example.com")
+POP3_PORT = int(_env("POP3_PORT", "995"))
+POP3_USE_SSL = _env("POP3_USE_SSL", "true").lower() == "true"
+POP3_USERNAME = _env("POP3_USERNAME", CORDCLOUD_EMAIL)
+POP3_PASSWORD = _env("POP3_PASSWORD")
 
 # SMTP 配置（发送签到结果通知）
-SMTP_HOST = os.getenv("SMTP_HOST", "smtp.qq.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "465"))
-SMTP_USE_SSL = os.getenv("SMTP_USE_SSL", "true").lower() == "true"
-SMTP_USERNAME = os.getenv("SMTP_USERNAME", CORDCLOUD_EMAIL)
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+SMTP_HOST = _env("SMTP_HOST", "smtp.qq.com")
+SMTP_PORT = int(_env("SMTP_PORT", "465"))
+SMTP_USE_SSL = _env("SMTP_USE_SSL", "true").lower() == "true"
+SMTP_USERNAME = _env("SMTP_USERNAME", CORDCLOUD_EMAIL)
+SMTP_PASSWORD = _env("SMTP_PASSWORD")
 
 # 持久化配置
-USE_PERSISTENT = os.getenv("USE_PERSISTENT_CONTEXT", "true").lower() == "true"
-PROFILE_DIR = Path(os.getenv("PERSISTENT_PROFILE_DIR", "./cloak_profile"))
-HEADLESS = os.getenv("HEADLESS", "false").lower() == "true"
+USE_PERSISTENT = _env("USE_PERSISTENT_CONTEXT", "true").lower() == "true"
+PROFILE_DIR = Path(_env("PERSISTENT_PROFILE_DIR", "./cloak_profile"))
+HEADLESS = _env("HEADLESS", "false").lower() == "true"
 
 LOGIN_URL = "https://www.cordcloud.one/auth/login"
 USER_URL = "https://www.cordcloud.one/user"
 
 # 调试：保存每步 HTML
 DEBUG_HTML_DIR = Path("./debug_html")
-SAVE_HTML = os.getenv("SAVE_HTML", "true").lower() == "true"
+SAVE_HTML = _env("SAVE_HTML", "true").lower() == "true"
 
 # ── 调试工具 ─────────────────────────────────────
 
