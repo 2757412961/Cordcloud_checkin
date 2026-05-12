@@ -21,7 +21,9 @@ from dotenv import load_dotenv
 from cloakbrowser import launch, launch_persistent_context
 
 # ── 配置 ────────────────────────────────────────────
-load_dotenv()
+_env_loaded = load_dotenv()
+if not _env_loaded:
+    print("[Config] 未找到 .env 文件，使用系统环境变量")
 
 CORDCLOUD_EMAIL = os.getenv("CORDCLOUD_EMAIL", "")
 CORDCLOUD_PASSWORD = os.getenv("CORDCLOUD_PASSWORD", "")
