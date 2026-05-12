@@ -12,7 +12,7 @@ jobs:
       - name: Check Date
         run: date
       - name: Check out cordcloud_api branch
-        uses: actions/checkout@4
+        uses: actions/checkout@v6
         with:
           ref: master
       - name: astral-sh/setup-uv
