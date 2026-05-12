@@ -30,6 +30,12 @@ def _env(key: str, default: str = "") -> str:
     val = os.getenv(key)
     return val if val else default
 
+def _mask_code(code: str) -> str:
+    """脱敏验证码，仅保留首尾字符"""
+    if len(code) <= 2:
+        return "*" * len(code)
+    return code[0] + "*" * (len(code) - 2) + code[-1]
+
 CORDCLOUD_EMAIL = _env("CORDCLOUD_EMAIL")
 CORDCLOUD_PASSWORD = _env("CORDCLOUD_PASSWORD")
 
@@ -256,7 +262,7 @@ def fetch_latest_verification_code(timeout_seconds=60, poll_interval=3, since_ti
                         start = max(0, match.start() - 20)
                         end = min(len(body), match.end() + 20)
                         ctx = body[start:end].replace("\n", " ")
-                        print(f"[POP3] ✅ [{label}] {desc}: {code} (上下文: ...{ctx}...)")
+                        print(f"[POP3] ✅ [{label}] {desc}: {_mask_code(code)} (上下文: ...{ctx}...)")
                         return code
                 return None
 
@@ -399,7 +405,7 @@ def main():
                 # 填写验证码到 #code 输入框 (input#code, maxlength=6, pattern=[0-9]*)
                 try:
                     page.locator("#code").fill(code)
-                    print(f"[Step 2] 已填写验证码: {code}")
+                    print(f"[Step 2] 已填写验证码: {_mask_code(code)}")
                 except Exception:
                     print(f"[Step 2] ⚠️ 未找到 #code 输入框")
                     return
