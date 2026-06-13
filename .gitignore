@@ -1,12 +1,14 @@
-# 敏感配置
+# Sensitive config
 .env
 *.env
+.env.*
 !*.env.example
+!.env.example
 
-# CloakBrowser 持久化配置
+# CloakBrowser persistent profile
 cloak_profile/
 
-# 调试输出
+# Debug output
 debug_html/
 
 # Python
@@ -17,7 +19,7 @@ dist/
 .venv/
 uv.lock
 
-# 系统
+# System
 .DS_Store
 Thumbs.db
 .claude
